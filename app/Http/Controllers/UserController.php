@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUpdateUserFormRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -30,8 +31,16 @@ class UserController extends Controller {
 
     }
 
-    public function store() {
-        dd("Cadastrando usuário");
+    public function store(StoreUpdateUserFormRequest $request) {
+
+        $data = $request->all();
+
+        $data["password"] = bcrypt($data["password"]);
+
+        User::create($data);
+
+        return redirect()->route("users.index");
+
     }
 
 }
