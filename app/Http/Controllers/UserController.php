@@ -52,12 +52,30 @@ class UserController extends Controller {
 
     }
 
-    public function update(Request $request, $id) {
+    public function update(StoreUpdateUserFormRequest $request, $id) {
 
         if(!$user = User::find($id))
             return redirect()->route("users.index");
 
-        dd($request->all());
+        $data = $request->only("name", "email");
+
+        if($request->password)
+            $data["password"] = $request->password;
+
+        $user->update($data);
+
+        return redirect()->route("users.index");
+
+    }
+
+    public function delete($id) {
+
+        if(!$user = User::find($id))
+            return redirect()->route("users.index");
+
+        $user->delete();
+
+        return redirect()->route("users.index");
 
     }
 
