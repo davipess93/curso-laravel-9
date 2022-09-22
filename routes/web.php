@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
-    UserController
+    UserController,
+    Admin\CommentController
 };
+
+Route::get("/users/{id}/comments", [CommentController::class, "index"])->name("comments.index");
 
 Route::delete("/users/{id}", [UserController::class, "delete"])->name("users.delete");
 Route::put("/users/{id}", [UserController::class, "update"])->name("users.update");
