@@ -26,7 +26,6 @@ class UserController extends Controller
 
   public function show($id)
   {
-
     // $user = $this->model->where("id", $id)->first();
     if (!$user = $this->model->find($id))
       return redirect()->route("users.index");
