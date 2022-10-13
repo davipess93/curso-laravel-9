@@ -6,8 +6,10 @@ use App\Http\Controllers\{
     Admin\CommentController
 };
 
-Route::post("/users/{id}/comments", [CommentController::class, "store"])->name("comments.store");
 Route::get("/users/{id}/comments/create", [CommentController::class, "create"])->name("comments.create");
+Route::get("/users/{user}/comments/{id}", [CommentController::class, "edit"])->name("comments.edit");
+Route::put("/comment/update/{id}", [CommentController::class, "update"])->name('comments.update');
+Route::post("/users/{id}/comments", [CommentController::class, "store"])->name("comments.store");
 Route::get("/users/{id}/comments", [CommentController::class, "index"])->name("comments.index");
 
 Route::delete("/users/{id}", [UserController::class, "delete"])->name("users.destroy");
