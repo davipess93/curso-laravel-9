@@ -3,7 +3,7 @@ version: "3.7"
 services:
     # image project
     app:
-        container_name: especializati-laravel-9
+        container_name: application
         build:
             context: .
             dockerfile: Dockerfile
@@ -12,18 +12,16 @@ services:
         working_dir: /var/www/
         volumes:
             - ./:/var/www
-        depends_on: 
-            - redis
         networks: 
             - laravel-9
     
     # nginx
     nginx:
-        container_name: especializati-nginx
+        container_name: nginx
         image: nginx:alpine
         restart: unless-stopped
         ports: 
-            - "8989:80"
+            - "80:80"
         volumes: 
             - ./:/var/www
             - ./docker/nginx/:/etc/nginx/conf.d/
@@ -32,18 +30,20 @@ services:
 
     # db mysql
     mysql:
-        container_name: especializati-mysql
-        image: mysql:5.7.22
+        container_name: mysql
+        image: mariadb:10.8.2
         restart: unless-stopped
         environment: 
             MYSQL_DATABASE: ${DB_DATABASE}
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
             MYSQL_PASSWORD: ${DB_PASSWORD}
             MYSQL_USER: ${DB_USERNAME}
+        command:
+            'mysqld --default-authentication-plugin=mysql_native_password --innodb-flush-method=fsync --innodb-use-native-aio=0'
         volumes: 
             - ./.docker/mysql/dbdata:/var/lib/mysql
         ports: 
-            - "3388:3306"
+            - "3306:3306"
         networks: 
             - laravel-9
 
