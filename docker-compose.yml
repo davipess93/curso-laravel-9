@@ -49,7 +49,7 @@ services:
 
     # queue
     queue:
-        container_name: especializati-queue
+        container_name: queue
         image: especializati/laravel9-app
         restart: unless-stopped
         command: "php artisan queue:work"
@@ -63,7 +63,7 @@ services:
 
     # redis
     redis:
-        container_name: especializati-redis
+        container_name: redis
         image: redis:latest
         networks: 
             - laravel-9
