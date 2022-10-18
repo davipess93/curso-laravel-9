@@ -11,21 +11,18 @@ class UserController extends Controller
 
   protected $model;
 
-  public function __construct(User $user)
-  {
+  public function __construct(User $user) {
     $this->model = $user;
   }
 
-  public function index(Request $request)
-  {
+  public function index(Request $request) {
 
     $users = $this->model->getUsers(search: $request->search ?? "");
 
     return view("users.index", compact("users"));
   }
 
-  public function show($id)
-  {
+  public function show($id) {
     // $user = $this->model->where("id", $id)->first();
     if (!$user = $this->model->find($id))
       return redirect()->route("users.index");
@@ -33,14 +30,12 @@ class UserController extends Controller
     return view("users.show", compact("user"));
   }
 
-  public function create()
-  {
+  public function create() {
 
     return view("users.create");
   }
 
-  public function store(StoreUpdateUserFormRequest $request)
-  {
+  public function store(StoreUpdateUserFormRequest $request) {
 
     $data = $request->all();
 
@@ -51,8 +46,7 @@ class UserController extends Controller
     return redirect()->route("users.index");
   }
 
-  public function edit($id)
-  {
+  public function edit($id) {
 
     if (!$user = $this->model->find($id))
       return redirect()->route("users.index");
@@ -60,8 +54,7 @@ class UserController extends Controller
     return view("users.edit", compact("user"));
   }
 
-  public function update(StoreUpdateUserFormRequest $request, $id)
-  {
+  public function update(StoreUpdateUserFormRequest $request, $id) {
 
     if (!$user = $this->model->find($id))
       return redirect()->route("users.index");
@@ -76,8 +69,7 @@ class UserController extends Controller
     return redirect()->route("users.index");
   }
 
-  public function delete($id)
-  {
+  public function delete($id) {
 
     if (!$user = $this->model->find($id))
       return redirect()->route("users.index");
